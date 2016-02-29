@@ -4,11 +4,15 @@ body {
 	text-align: center;
 }
 
-h1 {
+#title {
 	font-variant: small-caps;
 	font-size: 38px;
 }
 
 p {
 	font-size: 22px;
+}
+
+.img {
+	max-width: 20%;
 }
