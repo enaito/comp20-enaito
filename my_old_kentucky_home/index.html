@@ -14,7 +14,54 @@
 <div id="lyrics"></div>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+	var video = document.getElementById('music_videoeo');
+	var line = document.getElementById('lyrics');
+
+	video.addEventListener("timeupdate", function(){
+		if(video.currentTime < 8) {
+			line.innerHTML ="";
+		}
+		else if (video.currentTime < 15) {	
+			line.innerHTML = "<p>The sun shines bright in My Old Kentucky Home,</p>";
+		}
+		else if (video.currentTime < 22) {	//
+			line.innerHTML = "<p>'Tis summer, the people are gay;</p>";
+		}
+		else if (video.currentTime < 28) {	
+			line.innerHTML = "<p>The corn-top's ripe and the meadow's in the bloom</p>";
+		}
+		else if (video.currentTime < 35) {	
+			line.innerHTML = "<p>While the birds make music all the day.</p>";
+		}
+		else if (video.currentTime < 42) {	
+			line.innerHTML = "<p>The young folks roll on the little cabin floor,</p>";
+		}
+		else if (video.currentTime < 49) {	
+			line.innerHTML = "<p>All merry, all happy and bright;</p>";
+		}
+		else if (video.currentTime < 56) { //	
+			line.innerHTML = "<p>By 'n' by hard times comes a knocking at the door,</p>";
+		}
+		else if (video.currentTime < 63) {	
+			line.innerHTML = "<p>Then My Old Kentucky Home, good night!</p>";
+		}
+		else if (video.currentTime < 70) {	//
+			line.innerHTML = "<p>Weep no more my lady</p>";
+		}
+		else if (video.currentTime < 76) {	
+			line.innerHTML = "<p>Oh weep no more today;</p>";
+		}
+		else if (video.currentTime < 80) {		//
+			line.innerHTML = "<p>We will sing one song</p>";
+		}
+		else if (video.currentTime < 83) {	
+			line.innerHTML = "<p>For My Old Kentucky Home</p>";
+		}
+		else {	
+			line.innerHTML = "<p>For My Old Kentucky Home, far away</p>";
+		}
+	});
+
 </script>
 </body>
 </html>	
