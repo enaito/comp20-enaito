@@ -17,48 +17,62 @@
 	var video = document.getElementById('music_video');
 	var line = document.getElementById('lyrics');
 
+	var words = ["The sun shines bright in My Old Kentucky Home,", 
+				 "'Tis summer, the people are gay;",
+				 "The corn-top's ripe and the meadow's in the bloom",
+				 "While the birds make music all the day.",
+				 "The young folks roll on the little cabin floor,",
+				 "All merry, all happy and bright;",
+				 "By 'n' by hard times comes a knocking at the door,",
+				 "Then My Old Kentucky Home, good night!",
+				 "Weep no more my lady",
+				 "Oh weep no more today;",
+				 "We will sing one song",
+				 "For My Old Kentucky Home",
+				 "For My Old Kentucky Home, far away"];
+
 	video.addEventListener("timeupdate", function(){
 		if(video.currentTime < 8) {
 			line.innerHTML ="";
 		}
 		else if (video.currentTime < 15) {	
-			line.innerHTML = "<p>The sun shines bright in My Old Kentucky Home,</p>";
+			line.innerHTML = "<p>" + words[0] + "</p>";
 		}
-		else if (video.currentTime < 22) {	//
-			line.innerHTML = "<p>'Tis summer, the people are gay;</p>";
+		else if (video.currentTime < 22) {
+			line.innerHTML = "<p>" + words[1] + "</p>";
 		}
 		else if (video.currentTime < 28) {	
-			line.innerHTML = "<p>The corn-top's ripe and the meadow's in the bloom</p>";
+			line.innerHTML = "<p>" + words[2] + "</p>";
 		}
 		else if (video.currentTime < 35) {	
-			line.innerHTML = "<p>While the birds make music all the day.</p>";
+			line.innerHTML = "<p>" + words[3] + "</p>";
 		}
 		else if (video.currentTime < 42) {	
-			line.innerHTML = "<p>The young folks roll on the little cabin floor,</p><p><img div class = 'img' src='images/house.jpg' alt='Image' /></div></p>";
+			line.innerHTML = "<p>" + words[4] + "</p> <p> <img div class = 'img' src='images/house.jpg' alt='Image' /></div></p>";
 		}
 		else if (video.currentTime < 49) {	
-			line.innerHTML = "<p>All merry, all happy and bright;</p>";
+			line.innerHTML = "<p>" + words[5] + "</p>";
 		}
-		else if (video.currentTime < 56) { //	
-			line.innerHTML = "<p>By 'n' by hard times comes a knocking at the door,</p>";
+		else if (video.currentTime < 56) {	
+			line.innerHTML = "<p>" + words[6] + "</p>";
 		}
 		else if (video.currentTime < 63) {	
-			line.innerHTML = "<p>Then My Old Kentucky Home, good night!</p>";
+			line.innerHTML = "<p>" + words[7] + "</p>";
 		}
-		else if (video.currentTime < 70) {	//
-			line.innerHTML = "<p>Weep no more my lady</p>";
+		else if (video.currentTime < 70) {
+			line.innerHTML = "<p>" + words[8] + "</p>";
 		}
 		else if (video.currentTime < 76) {	
-			line.innerHTML = "<p>Oh weep no more today;</p>";
+			line.innerHTML = "<p>" + words[9] + "</p>";
 		}
-		else if (video.currentTime < 80) {		//
-			line.innerHTML = "<p>We will sing one song</p>";
+		else if (video.currentTime < 80) {
+			line.innerHTML = "<p>" + words[10] + "</p>";
 		}
 		else if (video.currentTime < 83) {	
-			line.innerHTML = "<p>For My Old Kentucky Home</p> <p> <img div class = 'img' src='images/poster.jpg' alt='Image' /></div></p>";
+			line.innerHTML = "<p>" + words[11] + "</p> <p> <img div class = 'img' src='images/poster.jpg' alt='Image' /></div></p>";
 		}
 		else {	
-			line.innerHTML = "<p>For My Old Kentucky Home, far away</p> <p> <img div class = 'img' src='images/poster.jpg' alt='Image' /></div></p>";
+			line.innerHTML = "<p>" + words[12] + "</p> <p> <img div class = 'img' src='images/poster.jpg' alt='Image' /></div></p>";
 		}
 	});
 
