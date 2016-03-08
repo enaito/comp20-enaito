@@ -10,7 +10,7 @@ function parse() {
 			elem = document.getElementById("messages");
 			elem.innerHTML = "";
 			for (var i = 0; i < 2; i++) {
-				elem.innerHTML = elem.innerHTML + "<p> <span class='message'>" + msg[i]["content"] + "<span class='author'>" + msg[i]["username"] + "</span>" + "</span> </p>";
+				elem.innerHTML = elem.innerHTML + "<p> <span class='message'> <span class='author'>" + msg[i].username + "</span>" + msg[i].content + "</span> </p>";
 			}
 		}
 	};
