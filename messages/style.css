@@ -1,1 +1,18 @@
-/* Your CSS here... */
+body {
+	font-family: "Helvetica";
+}
+
+.message {
+	background-color: #99FFFF;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 15px;
+}
+
+.author {
+	color: #808080;
+	padding-left: 15px;
+	font-variant: small-caps;
+}
