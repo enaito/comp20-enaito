@@ -6,7 +6,7 @@ var myLng = -71.1218;
 var request = new XMLHttpRequest();
 var me = new google.maps.LatLng(myLat, myLng);
 var myOptions = {
-            zoom: 13, // The larger the zoom number, the bigger the zoom
+            zoom: 12, // The larger the zoom number, the bigger the zoom
             center: me,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -65,13 +65,24 @@ function renderMap()
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			data = xhr.responseText;
 			vals = JSON.parse(data);
-			console.log(vals);
-			for (i = 0; i < vals.landmarks.length; i++) {
-				console.log(vals.landmarks[i].properties.Location_Name);
-			}
+			displayPeople();
 		}
 	};
 	xhr.send("login=BERNADINE_RYAN&lat=" + myLat + "&lng=" + myLng);
+}
+
+function displayPeople() {
+	for (i = 0; i < vals.people.length; i++) {
+		var pos = {lat: vals.people[i].lat, lng: vals.people[i].lng};
+		console.log(pos.lat);
+		pMark = new google.maps.Marker({
+			position: pos,
+			title: vals.people[i].login,
+			icon: "images/you.png",
+			map: map
+		});
+		//marker.setMap(map);
+	}
 }
 
 
