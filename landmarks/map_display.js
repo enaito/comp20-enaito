@@ -3,6 +3,7 @@
 // var myLng = 0;
 var myLat = 42.405;
 var myLng = -71.1218;
+var myName = "BERNADINE_RYAN";
 var request = new XMLHttpRequest();
 var me = new google.maps.LatLng(myLat, myLng);
 var myOptions = {
@@ -12,6 +13,8 @@ var myOptions = {
         };
 var map;
 var marker;
+var pMark;
+var lMark;
 var infowindow = new google.maps.InfoWindow();
 var xhr;
 
@@ -47,16 +50,21 @@ function renderMap()
     // Create a marker
     marker = new google.maps.Marker({
         position: me,
-        title: "Here I Am!",
+        title: myName,
         icon: "images/me.png"
     });
     marker.setMap(map);
+
+    google.maps.event.addListener(marker, 'click', function() {
+    	infowindow.setContent(marker.title + " hi");
+    	infowindow.open(map,marker);
+ 	});
         
     // Open info window on click of marker
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(marker.title);
-        infowindow.open(map, marker);
-    });
+    // google.maps.event.addListener(marker, 'click', function() {
+    //     infowindow.setContent(marker.title);
+    //     infowindow.open(map, marker);
+    // });	
 
 	xhr.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation", true)
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -68,7 +76,7 @@ function renderMap()
 			displayLandmarks();
 		}
 	};
-	xhr.send("login=BERNADINE_RYAN&lat=" + myLat + "&lng=" + myLng);
+	xhr.send("login=" + myName + "&lat=" + myLat + "&lng=" + myLng);
 }
 
 function displayPeople() {
@@ -77,19 +85,36 @@ function displayPeople() {
 			position: {lat: vals.people[i].lat, lng: vals.people[i].lng},
 			title: vals.people[i].login,
 			icon: "images/you.png",
+			content: vals.people[i].login,
 			map: map
 		});
+
+		google.maps.event.addListener(pMark, 'click', (function(pMark, i) {
+        	return function() {
+          		infowindow.setContent(this.content);
+          		infowindow.open(this.getMap(), this);
+        }
+      })(marker, i));
 	}
+
 }
 
 function displayLandmarks() {
 	for (i = 0; i < vals.landmarks.length; i++) {
-		pMark = new google.maps.Marker({
+		lMark = new google.maps.Marker({
 			position: {lat: vals.landmarks[i].geometry.coordinates[1], lng: vals.landmarks[i].geometry.coordinates[0]},
 			title: vals.landmarks[i].properties.Location_Name,
 			icon: "images/place.png",
+			content: vals.landmarks[i].properties.Location_Name,
 			map: map
 		});
+
+		google.maps.event.addListener(lMark, 'click', (function(lMark, i) {
+        	return function() {
+          		infowindow.setContent(this.content);
+          		infowindow.open(this.getMap(), this);
+        }
+      })(marker, i));
 	}
 }
 
