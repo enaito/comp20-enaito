@@ -6,7 +6,7 @@ var myLng = -71.1218;
 var request = new XMLHttpRequest();
 var me = new google.maps.LatLng(myLat, myLng);
 var myOptions = {
-            zoom: 12, // The larger the zoom number, the bigger the zoom
+            zoom: 14, // The larger the zoom number, the bigger the zoom
             center: me,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -45,11 +45,10 @@ function renderMap()
     map.panTo(me);
 
     // Create a marker
-  var image = "images/me.png";
     marker = new google.maps.Marker({
         position: me,
         title: "Here I Am!",
-        icon: image
+        icon: "images/me.png"
     });
     marker.setMap(map);
         
@@ -66,6 +65,7 @@ function renderMap()
 			data = xhr.responseText;
 			vals = JSON.parse(data);
 			displayPeople();
+			displayLandmarks();
 		}
 	};
 	xhr.send("login=BERNADINE_RYAN&lat=" + myLat + "&lng=" + myLng);
@@ -73,15 +73,23 @@ function renderMap()
 
 function displayPeople() {
 	for (i = 0; i < vals.people.length; i++) {
-		var pos = {lat: vals.people[i].lat, lng: vals.people[i].lng};
-		console.log(pos.lat);
 		pMark = new google.maps.Marker({
-			position: pos,
+			position: {lat: vals.people[i].lat, lng: vals.people[i].lng},
 			title: vals.people[i].login,
 			icon: "images/you.png",
 			map: map
 		});
-		//marker.setMap(map);
+	}
+}
+
+function displayLandmarks() {
+	for (i = 0; i < vals.landmarks.length; i++) {
+		pMark = new google.maps.Marker({
+			position: {lat: vals.landmarks[i].geometry.coordinates[1], lng: vals.landmarks[i].geometry.coordinates[0]},
+			title: vals.landmarks[i].properties.Location_Name,
+			icon: "images/place.png",
+			map: map
+		});
 	}
 }
 
