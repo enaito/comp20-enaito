@@ -113,12 +113,19 @@ function displayPeople() {
 }
 
 function displayLandmarks() {
+	var pic = {
+        url: 'images/place.png',
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(20, 33),	// adjust so bottom of house is
+        										// at the indicated position
+    };
+
 	for (i = 0; i < vals.landmarks.length; i++) {
 		lMark = new google.maps.Marker({
 			position: {lat: vals.landmarks[i].geometry.coordinates[1], 
 					   lng: vals.landmarks[i].geometry.coordinates[0]},
 			title: vals.landmarks[i].properties.Location_Name,
-			icon: "images/place.png",
+			icon: pic,
 			content: vals.landmarks[i].properties.Details,
 			map: map
 		});

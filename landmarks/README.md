@@ -6,7 +6,9 @@
 
 Implementation:
 	- All aspects of the assignment have been implemented correctly, including
-	  the homepage, resume, bio, and redirection from the Tufts CS webpage
+	  the idenification of current location, displaying icons for user,
+	  classmates, and landmarks, and info windows when icons are clicked.
+	  
 
 Collaboration:
 	- I did not collaborate with anyone on this assignment. However, I did use
