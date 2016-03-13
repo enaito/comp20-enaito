@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>captain's log</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$.each(localStorage, function(key, value){
+					$("#log").prepend(key + " - " + value + "<br>");
+				});
+
+				$( "#msg" ).keypress(function() {
+					if ( event.which == 13 ) {
+						var date = new Date();
+						var entry = $("#msg").val();
+						localStorage.setItem(date, entry);
+						$('#msg').val('');
+						$("#log").prepend(date + " - " + entry + "<br>");
+
+					}
+				});
+
+			});
+			
+		</script>
+	</head>
+
+	<body>
+		<h1>Captain's Log</h1>
+		<h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+		<div id="log"></div>
+	</body>
+</html>
