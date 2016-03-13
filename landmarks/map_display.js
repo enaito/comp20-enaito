@@ -73,11 +73,13 @@ function renderMap()
     						  "<br><span class='title'>Landmark Distance: </span>" + 
     						  closestLandmark.distance + " mi");
     	infowindow.open(map,marker);
+    	// swap lines below
     	pathToLandmark.setMap(map);
     	// directionsDisplay.setMap(map);
  	});
 
  	google.maps.event.addListener(infowindow,'closeclick',function(){
+    	// swap lines below
 		pathToLandmark.setMap(null);
 		// directionsDisplay.setMap(null);
 	});
@@ -103,6 +105,7 @@ function displayPeople() {
 
 		google.maps.event.addListener(pMark, 'click', (function(pMark, i) {
         	return function() {
+    			// swap lines below
         		pathToLandmark.setMap(null);
         		// directionsDisplay.setMap(null);
           		infowindow.setContent(this.content);
@@ -126,6 +129,7 @@ function displayLandmarks() {
 
 		google.maps.event.addListener(lMark, 'click', (function(lMark, i) {
         	return function() {
+    			// swap lines below
         		pathToLandmark.setMap(null);
         		// directionsDisplay.setMap(null);
           		infowindow.setContent(this.content);
@@ -152,6 +156,8 @@ function findClosestLandmark() {
 		}
 	}
 
+	// two ways to display polyline
+
     pathToLandmark = new google.maps.Polyline({
     	path: [{lat: myLat, lng: myLng}, 
     		   {lat: currCloseL.geometry.coordinates[1], 
@@ -162,24 +168,20 @@ function findClosestLandmark() {
     	strokeWeight: 2
   	});
 
-// directionsService = new google.maps.DirectionsService();
-// directionsDisplay= new google.maps.DirectionsRenderer();
-//       google.maps.event.addListener(map, 'click', function() {
-// 	      var request = {
-// 	        origin:me, 
-// 	        destination:new google.maps.LatLng(currCloseL.geometry.coordinates[1], currCloseL.geometry.coordinates[0]),
-// 	        travelMode: google.maps.DirectionsTravelMode.DRIVING
-// 	      };
+	// directionsService = new google.maps.DirectionsService();
+	// directionsDisplay = new google.maps.DirectionsRenderer();
+	// var request = {
+	// 	origin: me, 
+	//     destination: new google.maps.LatLng(currCloseL.geometry.coordinates[1], currCloseL.geometry.coordinates[0]),
+	//     travelMode: google.maps.DirectionsTravelMode.WALKING
+	// };
 
-// 	      directionsService.route(request, function(response, status) {
-// 	      if (status == google.maps.DirectionsStatus.OK) {
-// 	         directionsDisplay.setDirections(response);
-// 	      }
-// 	    });
-// 	});
-
-
-
+	// directionsService.route(request, function(response, status) {
+	// 	if (status == google.maps.DirectionsStatus.OK) {
+	//     	directionsDisplay.setDirections(response);
+	// 	}
+	// });
+	
 	return {landmark: currCloseL, distance: currClose};
 }
 
