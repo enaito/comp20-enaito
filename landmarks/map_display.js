@@ -1,8 +1,5 @@
-//comment back in when in MA
-// var myLat = 0;
-// var myLng = 0;
-var myLat = 42.405;
-var myLng = -71.1218;
+var myLat = 0;
+var myLng = 0;
 var myName = "BERNADINE_RYAN";
 var request = new XMLHttpRequest();
 var me = new google.maps.LatLng(myLat, myLng);
@@ -30,9 +27,8 @@ function init()
 function getMyLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            //comment back in when in MA
-            //myLat = position.coords.latitude;
-            //myLng = position.coords.longitude;
+            myLat = position.coords.latitude;
+            myLng = position.coords.longitude;
             renderMap();
         });
     }
