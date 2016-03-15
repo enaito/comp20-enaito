@@ -112,7 +112,7 @@ function displayLandmarks() {										// at the indicated position
 			position: {lat: vals.landmarks[i].geometry.coordinates[1], 
 					   lng: vals.landmarks[i].geometry.coordinates[0]},
 			title: vals.landmarks[i].properties.Location_Name,
-			icon: "images/place",
+			icon: "images/place.png",
 			content: vals.landmarks[i].properties.Details,
 			map: map
 		});
