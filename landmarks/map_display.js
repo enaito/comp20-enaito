@@ -69,15 +69,11 @@ function renderMap()
     						  "<br><span class='title'>Landmark Distance: </span>" + 
     						  closestLandmark.distance + " mi");
     	infowindow.open(map,marker);
-    	// swap lines below
     	pathToLandmark.setMap(map);
-    	// directionsDisplay.setMap(map);
  	});
 
  	google.maps.event.addListener(infowindow,'closeclick',function(){
-    	// swap lines below
 		pathToLandmark.setMap(null);
-		// directionsDisplay.setMap(null);
 	});
  }
 
@@ -101,9 +97,7 @@ function displayPeople() {
 
 		google.maps.event.addListener(pMark, 'click', (function(pMark, i) {
         	return function() {
-    			// swap lines below
         		pathToLandmark.setMap(null);
-        		// directionsDisplay.setMap(null);
           		infowindow.setContent(this.content);
           		infowindow.open(this.getMap(), this);
         	}
@@ -112,29 +106,20 @@ function displayPeople() {
 
 }
 
-function displayLandmarks() {
-	var pic = {
-        url: 'images/place.png',
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(20, 33),	// adjust so bottom of house is
-        										// at the indicated position
-    };
-
+function displayLandmarks() {										// at the indicated position
 	for (i = 0; i < vals.landmarks.length; i++) {
 		lMark = new google.maps.Marker({
 			position: {lat: vals.landmarks[i].geometry.coordinates[1], 
 					   lng: vals.landmarks[i].geometry.coordinates[0]},
 			title: vals.landmarks[i].properties.Location_Name,
-			icon: pic,
+			icon: "images/place",
 			content: vals.landmarks[i].properties.Details,
 			map: map
 		});
 
 		google.maps.event.addListener(lMark, 'click', (function(lMark, i) {
         	return function() {
-    			// swap lines below
         		pathToLandmark.setMap(null);
-        		// directionsDisplay.setMap(null);
           		infowindow.setContent(this.content);
           		infowindow.open(this.getMap(), this);
         	}
@@ -159,8 +144,6 @@ function findClosestLandmark() {
 		}
 	}
 
-	// two ways to display polyline
-
     pathToLandmark = new google.maps.Polyline({
     	path: [{lat: myLat, lng: myLng}, 
     		   {lat: currCloseL.geometry.coordinates[1], 
@@ -170,20 +153,6 @@ function findClosestLandmark() {
     	strokeOpacity: 1.0,
     	strokeWeight: 2
   	});
-
-	// directionsService = new google.maps.DirectionsService();
-	// directionsDisplay = new google.maps.DirectionsRenderer();
-	// var request = {
-	// 	origin: me, 
-	//     destination: new google.maps.LatLng(currCloseL.geometry.coordinates[1], currCloseL.geometry.coordinates[0]),
-	//     travelMode: google.maps.DirectionsTravelMode.WALKING
-	// };
-
-	// directionsService.route(request, function(response, status) {
-	// 	if (status == google.maps.DirectionsStatus.OK) {
-	//     	directionsDisplay.setDirections(response);
-	// 	}
-	// });
 	
 	return {landmark: currCloseL, distance: currClose};
 }
