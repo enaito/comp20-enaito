@@ -39,7 +39,7 @@ function getMyLocation() {
 
 function renderMap()
 {
-	xhr.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation", true)
+	xhr.open("POST", "https://glacial-cove-91033.herokuapp.com/sendLocation", true)
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
