@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Assessment of Landmarks</title>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+
+    <h1>Security Assessment of Landmarks</h1>
+
+    <p>By: Emily Naito - 4/26/2016</p>
+
+    <h2>Introduction</h2>
+
+    <p>I was tasked to do a security assessment of the Jacob's Landmarks project for Comp20 assignment 2 and 3. For these assignments, he was supposed to develop a server-side web application to manage databases, keeping track of people's check-in locations and the location of different historical landmarks. This server paired with the previous assignment, which used XMLHTTPRequest and the Google Maps API to display these nearby locations on a map with interactive clicking. I was hired to analyze Jacob's assignments and find potential security or privacy vulnerabilities. The methodolgy I used, as well as the results of my analysis, can be found below. Overall, there were many shortcomings within his code, which was not surprising, given that the assignments said to not focus on security issues. However, in future, there is much to be improved upon to secure such a web application.</p>
+
+    <h2>Methodology</h2>
+
+    <p>I completed two rounds of security analysis. I began with "black-box" testing, in which I ran the code normally and tried to infultrate the web application without looking at the source code. I then read through the source code and found other potential issues, which I continued to exploit. In addition to these tests by hand, I also utilized <a href="https://addons.mozilla.org/en-US/firefox/addon/tamper-data/">Tamper Data for Firefox</a> to test different possible exploitations for HTTP POST.
+
+    <h2>Abstract of Findings</h2>
+
+    <p>Provide an overview of all the security and privacy issues you identified. This section should be written for non-technical managers who do not have technical expertise and do not have time to read the entire document. Write this section using lay language.</p>
+
+    <h2>Issues Found</h2>
+
+    <ol>
+        <li>HTML Injection
+            <ul>
+                <li><span class='bold'>Severity: </span>test</li>
+                <li><span class='bold'>Location: </span>test</li>
+                <li><span class='bold'>Issue: </span>test</li>
+                <li><span class='bold'>Resolution: </span>test</li>
+            </ul>
+        </li>
+
+        <li>Cross-Site Scripting Server Crash
+            <ul>
+                <li><span class='bold'>Severity: </span>test</li>
+                <li><span class='bold'>Location: </span>test</li>
+                <li><span class='bold'>Issue: </span>test</li>
+                <li><span class='bold'>Resolution: </span>test</li>
+            </ul>
+        </li>
+
+        <li>Privacy of Checkins Database
+            <ul>
+                <li><span class='bold'>Severity: </span>test</li>
+                <li><span class='bold'>Location: </span>test</li>
+                <li><span class='bold'>Issue: </span>test</li>
+                <li><span class='bold'>Resolution: </span>test</li>
+
+                <li>issue (eg database injection, really bad programming practice)</li>
+                <li>location/page where issue was found</li>
+                <li>severity of issue (low, med, high), justify</li>
+                <li>description of issue, how did you find it (screenshot of problem is excellent)</li>
+                <li>proof of vulnerability, screenshots are important</li>
+                <li>resolution: make recommendation(s) on how issue can be resolved. show code if possible</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>Conclusion</h2>
+
+    <p>you can also list future considerations and recommendations with costs</p>
+
+</body>
+</html>
