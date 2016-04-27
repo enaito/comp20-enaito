@@ -73,7 +73,7 @@
                 </li>
 
                 <li>
-                    <p><span class='bold'>Resolution:</span>Similar to the HTML Injection, the values for login, lat, and lng should be escaped before added to the database. By converting all of the potentially problematic characters to their escaped values (eg. using &amp;lt; insteaad of &lt;), this prevents the scripts from executing, either when trying to display on the homescreen or other uses of the database. This can be achieved with a <span class='code'>string.match</span> to identify only numerical digits, alphabet characters, white space, and certain special characters (eg. !, #, $) not related to scriptin, and <span class='code'>string.join</span> to remove the rest.</p>
+                    <p><span class='bold'>Resolution:</span>Similar to the HTML Injection, the values for login, lat, and lng should be escaped before added to the database. By converting all of the potentially problematic characters to their escaped values (eg. using &amp;lt; instead of &lt;), this prevents the scripts from executing, either when trying to display on the homescreen or other uses of the database. This can be achieved with a <span class='code'>string.match</span> to identify only numerical digits, alphabet characters, white space, and certain special characters (eg. !, #, $) not related to scripting, and <span class='code'>string.join</span> to remove the rest.</p>
                 </li>
             </ul>
         </li>
@@ -81,19 +81,22 @@
         <li>Privacy of Checkins Database
              <ul>
                 <li>
-                    <p><span class='bold'>Severity: Low.</span>This is a privacy concern, as this allows access to the JSON of all </p>
+                    <p><span class='bold'>Severity: Low.</span>This is a privacy concern, as this allows access to the JSON of all of the elements, which is not allowed for the spec. While this is not a huge security breach, as this information is publicly available on the homepage, allowing the information as a JSON means that the data can easily be used without stripping the website, so it can be negatively utilized.</p>
                 </li>
 
                 <li>
-                    <p><span class='bold'>Location: </span>test</p>
+                    <p><span class='bold'>Location: </span>In the HTTP GET/checkins.json, when providing invalid login information to result in displaying all of the JSON checkins, rather than just the ones that meet the search query.</p>
                 </li>
 
                 <li>
-                    <p><span class='bold'>Issue: </span>test</p>
+                    <p><span class='bold'>Issue: </span>I discovered this potential privacy breach by entering invalid login information as the query string for the checkins.json request. Instead of entering the URL as <span class='code'>http://avina-vi.herokuapp.com/checkins.json?login=mchow</span> as a way to access all of Ming's checkins (shown on the top, as the appropriate result), I entered <span class='code'>http://avina-vi.herokuapp.com/checkins.json?login[$ne]=HACKD</span>, which led to the result on the bottom. By using the <span class='code'>[$ne]</span>, I was able to access all of the JSON entries that were not equal to "HACKD" which, in this case, was the entire database. With this information, someone would be able to repurpose all of the database information, without even needing to do a HTTP POST/.</p>
+
+                    <p><img src='images/checkinMing.png' alt='Checkin mchow' width=70%></img></p>
+                    <p><img src='images/checkinHackd.png' alt='Checkin HACKD' width=70%></img></p>
                 </li>
 
                 <li>
-                    <p><span class='bold'>Resolution: </span>test</p>
+                    <p><span class='bold'>Resolution:</span>To fix this problem with the /checkins.json, we can insert another cleaning of the user input, this time on the <span class='code'>request.query.login</span>, so as to ensure that there are not any overrides to the equals sign. This can similarly be done with a  <span class='code'>string.match()</span> and <span class='code'>string.join()</span>, or another method to filter out potentially problematic characters, such as anything within [].</p>
                 </li>
             </ul>
         </li>
@@ -101,7 +104,7 @@
         <li>Honoroable Mention: URI Access
             <ul>
                 <li>
-                    <p>Jacob included his MongoDB username and password as a way to reference his MongoURI. However, this is a major security risk, as this information can grant owner access to all database information.</p>
+                    <p>Jacob included his MongoDB username and password as a way to reference his MongoURI. However, this is a major security risk, as this information can grant owner access to all database information. While this was not relevant during this security evaluation, as I already had collaborator access to the assignment, this poses a major risk to others who could access his code through non-approved means.</p>
                 </li>
             </ul>
         </li>
@@ -109,7 +112,7 @@
 
     <h2>Conclusion</h2>
 
-    <p>you can also list future considerations and recommendations with costs</p>
+    <p>There are many potential issues within the Server-Side assignment which render security or privacy concerns. However, many of these issues are easily rectified through simple checking of user input, as most of the code currently assumes that the user input is correct and helpful. In future, it would be beneficial to have this sort of error checking. In addition, to secure it further, there may be benefit to limiting the additions to the checkins database to only be from legitimate sources, such as the A2, rather than any cross-origin site. However, this would requite a restructure of both the server and frontend code, which would be comparatively much more expensive, though more thorough in avoiding potential hacking. It also depends on the real goal of the server, and if there are other use cases besides the A2 map.</p>
 
 </body>
 </html>
