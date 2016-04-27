@@ -14,50 +14,95 @@
 
     <h2>Introduction</h2>
 
-    <p>I was tasked to do a security assessment of the Jacob's Landmarks project for Comp20 assignment 2 and 3. For these assignments, he was supposed to develop a server-side web application to manage databases, keeping track of people's check-in locations and the location of different historical landmarks. This server paired with the previous assignment, which used XMLHTTPRequest and the Google Maps API to display these nearby locations on a map with interactive clicking. I was hired to analyze Jacob's assignments and find potential security or privacy vulnerabilities. The methodolgy I used, as well as the results of my analysis, can be found below. Overall, there were many shortcomings within his code, which was not surprising, given that the assignments said to not focus on security issues. However, in future, there is much to be improved upon to secure such a web application.</p>
+    <p>I was tasked to do a security assessment of the Jacob's Landmarks project for Comp20 assignment 2 and 3. For these assignments, he was supposed to develop a server-side web application to manage databases, keeping track of people's check-in locations and the location of different historical landmarks. This server paired with the previous assignment, which used XMLHTTPRequest and the Google Maps API to display these nearby locations on a map with interactive clicking.</p>
+
+    <p>I was hired to analyze Jacob's assignments and find potential security or privacy vulnerabilities. The methodology I used, as well as the results of my analysis, can be found below. Overall, there were many shortcomings within his code, which was not surprising, given that the assignments said to not focus on security issues. However, in future, there is much to be improved upon to secure such a web application.</p>
 
     <h2>Methodology</h2>
 
-    <p>I completed two rounds of security analysis. I began with "black-box" testing, in which I ran the code normally and tried to infultrate the web application without looking at the source code. I then read through the source code and found other potential issues, which I continued to exploit. In addition to these tests by hand, I also utilized <a href="https://addons.mozilla.org/en-US/firefox/addon/tamper-data/">Tamper Data for Firefox</a> to test different possible exploitations for HTTP POST.
+    <p>I completed two rounds of security analysis. I began with "black-box" testing, in which I ran the code normally and tried to infiltrate the web application without looking at the source code. I then read through the source code and found other potential issues, which I continued to exploit. In addition to these tests by hand, I also utilized <a href="https://addons.mozilla.org/en-US/firefox/addon/tamper-data/">Tamper Data for Firefox</a> to test different possible exploitations for HTTP POST, along with <span class='code'>curl</span>.</p>
 
     <h2>Abstract of Findings</h2>
 
-    <p>Provide an overview of all the security and privacy issues you identified. This section should be written for non-technical managers who do not have technical expertise and do not have time to read the entire document. Write this section using lay language.</p>
+    <p>From my testing, I found multiple different security and privacy issues. The largest problem is a reliance on user-input. If users provided information unlike what the server expected, there were many potential problems. In some cases, the server would utilize the bad output, meaning the map would be unable to process the information, resulting in errors and incorrect displaying. In other cases, bad user input could crash the server entirely, rendering the entire web application unusable until the information was removed. This is an extremely problematic security issue, as the database could be taken down with one line of code, easily accessible to the public. Additionally, there are privacy concerns, as the entirety of the database can be accessed in a usable format&mdash;rather than the readable format of the homepage&mdash;even though the application should only allow for specific searches.</p>
 
     <h2>Issues Found</h2>
 
     <ol>
         <li>HTML Injection
             <ul>
-                <li><span class='bold'>Severity: </span>test</li>
-                <li><span class='bold'>Location: </span>test</li>
-                <li><span class='bold'>Issue: </span>test</li>
-                <li><span class='bold'>Resolution: </span>test</li>
+                <li>
+                    <p><span class='bold'>Severity: Medium.</span> With HTML Injection, users can control content of the page without regulation. The owner is no longer able to determine the content of the page, which can entirely change the message or intent of any web application. It also is problematic for other sites that rely on the server, as they, too, will be expecting regular data. However, this is relatively easy to correct, and cleaning the database is relatively simple, though annoying or painstaking.</p>
+                </li>
+                
+                <li>
+                    <p><span class='bold'>Location:</span> In the HTTP POST/sendLocation, entering HTML for the login, lat, or lng values result in the execution of the HTML, rather than the text or number data expected.</p>
+                </li>
+                
+                <li>
+                    <p><span class='bold'>Issue:</span> When I used <span class ='code'>curl</span> to test the error checking and user input escaping, I recognized that HTML was allowed, such as in the values of the key-value pairs. For example, running <span class='code'>curl --data "login=&lt;img src='http://i.imgur.com/vwi402f.png' height=200&gt;&lt;/img&gt;&amp;lat=0&amp;lng=0" http://avina-vi.herokuapp.com/sendLocation</span> resulted in the following display on the index page:</p>
+                    
+                    <p><img src='images/htmlInj.png' alt='HTML Injection' width=70%></img></p>
+                    
+                    <p>While this image is relatively harmless, the ability to insert HTML into the database both affects this HTTP GET for the Checkins homepage, as well as any clients that would use this database, like with A2, which now displays this in the info window:</p>
+
+                    <p><img src='images/htmlInjMap.png' alt='HTML Injection on A2' width=30%></img></p>
+                </li>
+                
+                <li>
+                    <p><span class='bold'>Resolution:</span> The code should escape the user input before it is added to the database, as to avoid problematic characters. One method of doing this is with <span class='code'>string.match</span>, which allows potentially dangerous characters (such as <) to be removed from the string as a way to avoid bad data.</p>
+                    <p>Note: In Jacob's assignment, the homepage does not properly display the checkins, as they are not arranged in order starting from most recent. However, this could be easily remedied by using <span class='code'>Date()</span>, rather than his method, which includes <span class='code'>new Date()</span> with a complicated series of getting current data and padding, which resulted in unordered items (or rather, items sorted, but not with correct information).</p>
+                </li>
             </ul>
         </li>
 
-        <li>Cross-Site Scripting Server Crash
+        <li>Cross-Site Scripting Redirect
             <ul>
-                <li><span class='bold'>Severity: </span>test</li>
-                <li><span class='bold'>Location: </span>test</li>
-                <li><span class='bold'>Issue: </span>test</li>
-                <li><span class='bold'>Resolution: </span>test</li>
+                <li>
+                    <p><span class='bold'>Severity: High.</span>Redirecting the page not only renders the homepage of Jacob's Heroku entirely useless&mdash;unless you want to look at otters&mdash;it also could entirely change the message of the site or redirect to a harmful download. Also, the potential of cross-site scripting is endless. Not only could the script be used for redirects, but also for much more questionable means, like accessing private information.</p>
+                </li>
+
+                <li>
+                    <p><span class='bold'>Location: In the HTTP POST/sendLocation, the login, lat, and lng values are not checked for scripts, so they will be executed when displayed on the homepage, or other potential uses of the database.</span>test</p>
+                </li>
+
+                <li>
+                    <p><span class='bold'>Issue:</span> I was using <span class='code'>curl</span> to test the potential of cross-site scripting, as I know the assignment required the use of cross-origin resource sharing. For example, when I ran <span class='code'>curl --data "login=&lt;script&gt;window.location.replace('http://reddit.com/r/otters');&lt;/script&gt;&amp;lat=0&amp;lng=0" http://avina-vi.herokuapp.com/sendLocation</span>, accessing his Heroku homepage now automatically redirected to a Reddit thread about otters, as shown below.</p>
+
+                    <p><img src='images/redirect.png' alt='XSS Redirect' width=70%></img></p>
+                </li>
+
+                <li>
+                    <p><span class='bold'>Resolution:</span>Similar to the HTML Injection, the values for login, lat, and lng should be escaped before added to the database. By converting all of the potentially problematic characters to their escaped values (eg. using &amp;lt; insteaad of &lt;), this prevents the scripts from executing, either when trying to display on the homescreen or other uses of the database. This can be achieved with a <span class='code'>string.match</span> to identify only numerical digits, alphabet characters, white space, and certain special characters (eg. !, #, $) not related to scriptin, and <span class='code'>string.join</span> to remove the rest.</p>
+                </li>
             </ul>
         </li>
 
         <li>Privacy of Checkins Database
-            <ul>
-                <li><span class='bold'>Severity: </span>test</li>
-                <li><span class='bold'>Location: </span>test</li>
-                <li><span class='bold'>Issue: </span>test</li>
-                <li><span class='bold'>Resolution: </span>test</li>
+             <ul>
+                <li>
+                    <p><span class='bold'>Severity: Low.</span>This is a privacy concern, as this allows access to the JSON of all </p>
+                </li>
 
-                <li>issue (eg database injection, really bad programming practice)</li>
-                <li>location/page where issue was found</li>
-                <li>severity of issue (low, med, high), justify</li>
-                <li>description of issue, how did you find it (screenshot of problem is excellent)</li>
-                <li>proof of vulnerability, screenshots are important</li>
-                <li>resolution: make recommendation(s) on how issue can be resolved. show code if possible</li>
+                <li>
+                    <p><span class='bold'>Location: </span>test</p>
+                </li>
+
+                <li>
+                    <p><span class='bold'>Issue: </span>test</p>
+                </li>
+
+                <li>
+                    <p><span class='bold'>Resolution: </span>test</p>
+                </li>
+            </ul>
+        </li>
+
+        <li>Honoroable Mention: URI Access
+            <ul>
+                <li>
+                    <p>Jacob included his MongoDB username and password as a way to reference his MongoURI. However, this is a major security risk, as this information can grant owner access to all database information.</p>
+                </li>
             </ul>
         </li>
     </ol>

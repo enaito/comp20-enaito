@@ -14,6 +14,14 @@ h2 {
   font-weight: bold;
 }
 
-p, blockquote, ul, ol, dl, li, table, pre {
+.code {
+	font-family: monospace;
+	background: #E9E9E9;
+	padding: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+p, blockquote, ul, ol, li {
   margin: 15px 0;
 }
